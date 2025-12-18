@@ -6,11 +6,9 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=${TZ}
     volumes:
-      - ./openvpn:/config
+      - ./openvpn:/openvpn
     restart: unless-stopped
 
   cloudflared:
