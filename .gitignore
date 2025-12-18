@@ -1,0 +1,4 @@
+.env
+openvpn/
+state/
+*.ovpn

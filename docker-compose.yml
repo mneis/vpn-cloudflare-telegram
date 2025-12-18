@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  openvpn:
+    image: kylemanna/openvpn
+    container_name: openvpn
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./openvpn:/etc/openvpn
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: /start-tunnel.sh
+    volumes:
+      - ./cloudflared/start-tunnel.sh:/start-tunnel.sh
+      - ./state:/state
+    depends_on:
+      - openvpn
+    restart: unless-stopped
+
+  notifier:
+    build: ./notifier
+    container_name: vpn-notifier
+    environment:
+      - TZ=${TZ}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    volumes:
+      - ./state:/state
+    restart: unless-stopped

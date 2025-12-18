@@ -1,0 +1,3 @@
+0 9 * * * /notify.sh
+0 21 * * * /notify.sh
+@reboot /notify.sh
