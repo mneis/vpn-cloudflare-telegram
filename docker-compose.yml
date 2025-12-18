@@ -2,12 +2,16 @@ version: "3.9"
 
 services:
   openvpn:
-    image: ghcr.io/wfg/openvpn:latest
+    image: linuxserver/openvpn-as:latest
     container_name: openvpn
     cap_add:
       - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
     volumes:
-      - ./openvpn:/etc/openvpn
+      - ./openvpn:/config
     restart: unless-stopped
 
   cloudflared:

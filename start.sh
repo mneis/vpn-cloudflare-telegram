@@ -3,9 +3,7 @@ set -e
 
 mkdir -p openvpn state
 
-./init-openvpn.sh
-
-docker compose build
 docker compose up -d
 
-echo "VPN stack running"
+echo "✅ VPN stack running"
+echo "ℹ️ OpenVPN-AS admin UI: https://<cloudflare-url>:943"
